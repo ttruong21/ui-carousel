@@ -389,27 +389,25 @@ angular.module('ui.carousel.controllers')
      * to exactly its position
      */
     this.correctTrack = () => {
-      if (this.options.infinite) {
-        let left = 0;
-        if ( this.slides.length > this.options.slidesToShow ) {
-          left = -1 * (this.currentSlide + this.options.slidesToShow) * this.itemWidth;
-        }
-
-        // Move without anim
-        this.trackStyle[this.transitionType] =
-          this.transformType + ' ' + 0 + 'ms ' + this.options.cssEase;
-
-        this.isTrackMoving = true;
-        $timeout(() => {
-          this.trackStyle[this.animType] = 'translate3d(' + left + 'px, 0, 0px)';
-
-          // Revert animation
-          $timeout(() => {
-            this.refreshTrackStyle();
-            this.isTrackMoving = false;
-          }, 200);
-        });
+      let left = 0;
+      if ( this.slides.length > this.options.slidesToShow ) {
+        left = -1 * (this.currentSlide + this.options.slidesToShow) * this.itemWidth;
       }
+
+      // Move without anim
+      this.trackStyle[this.transitionType] =
+        this.transformType + ' ' + 0 + 'ms ' + this.options.cssEase;
+
+      this.isTrackMoving = true;
+      $timeout(() => {
+        this.trackStyle[this.animType] = 'translate3d(' + left + 'px, 0, 0px)';
+
+        // Revert animation
+        $timeout(() => {
+          this.refreshTrackStyle();
+          this.isTrackMoving = false;
+        }, 200);
+      });
     };
 
     /**
